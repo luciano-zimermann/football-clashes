@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:football_clashes/cards/clash_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:football_clashes/screens/new_clash_form_screen.dart';
 
 class ClashesScreen extends StatefulWidget {
   const ClashesScreen({super.key});
@@ -10,24 +10,18 @@ class ClashesScreen extends StatefulWidget {
 }
 
 class ClashesScreenState extends State<ClashesScreen> {
-  void _addTestData() async {
-    try {
-      await FirebaseFirestore.instance.collection('test').add({
-        'name': 'John',
-        'age': 25,
-        'active': true,
-        'dt_creation': DateTime.timestamp(),
-      });
-
-      debugPrint('Dado de teste enviado com sucesso.');
-    } catch (e) {
-      debugPrint('Erro ao enviar dado de teste: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewClashFormScreen()),
+          );
+        },
+        child: Icon(Icons.add_road),
+      ),
       appBar: AppBar(title: const Text('Confrontos Futebolísticos')),
       body: SingleChildScrollView(
         child: Column(
@@ -59,10 +53,6 @@ class ClashesScreenState extends State<ClashesScreen> {
               totalMatches: 2,
               homeTeamOwner: 'LZ',
               awayTeamOwner: 'GSZ',
-            ),
-            ElevatedButton(
-              onPressed: _addTestData,
-              child: const Text('Teste Firebase'),
             ),
           ],
         ),
